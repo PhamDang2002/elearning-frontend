@@ -31,7 +31,7 @@ import AdminDashbord from "./admin/Dashboard/AdminDashbord";
 import AdminCourses from "./admin/Courses/AdminCourses";
 import AdminUsers from "./admin/Users/AdminUsers";
 
-export const server = "http://localhost:5000";
+export const server = "https://elerning-server-893q.onrender.com";
 
 const router = createBrowserRouter([
   {
