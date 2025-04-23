@@ -11,6 +11,7 @@ import { openSnackbar } from "@redux/slices/snackbarSlice";
 const AdminUsers = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.userInfo.user).data;
+
   const [users, setUsers] = useState([]);
   const data = useFetchUsersQuery();
   const dispatch = useDispatch();

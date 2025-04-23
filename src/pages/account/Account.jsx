@@ -9,6 +9,7 @@ import { Button } from "@mui/material";
 const Account = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.userInfo.user);
+
   return (
     <div>
       {user && (

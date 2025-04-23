@@ -30,6 +30,8 @@ import Loading from "@components/Loading";
 import AdminDashbord from "./admin/Dashboard/AdminDashbord";
 import AdminCourses from "./admin/Courses/AdminCourses";
 import AdminUsers from "./admin/Users/AdminUsers";
+import ForgotPassword from "@pages/auth/ForgotPassword";
+import ResetPassword from "@pages/auth/ResetPassword";
 
 export const server = "http://localhost:5000";
 
@@ -112,6 +114,14 @@ const router = createBrowserRouter([
           {
             path: "/verify-otp",
             element: <OTPVerifyPage />,
+          },
+          {
+            path: "/forgot",
+            element: <ForgotPassword />,
+          },
+          {
+            path: "/reset-password/:token",
+            element: <ResetPassword />,
           },
         ],
       },

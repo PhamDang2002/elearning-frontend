@@ -114,14 +114,14 @@ export const rootApi = createApi({
         query: ({ id, formData }) => {
           return { url: `/course/${id}`, method: "POST", body: formData };
         },
-        invalidatesTags: ["Lectures"],
+        invalidatesTags: ["Lectures"], // Khi thêm bài giảng, sẽ làm mới lại tất cả dữ liệu "Lectures"
       }),
       deleteLecture: builder.mutation({
         query: (id) => ({
           url: `/lecture/${id}`,
           method: "DELETE",
         }),
-        invalidatesTags: ["Lectures"],
+        invalidatesTags: ["Lectures"], // Khi xóa bài giảng, sẽ làm mới lại tất cả dữ liệu "Lectures"
       }),
       fetchStats: builder.query({
         query: () => "/stats",
@@ -144,6 +144,38 @@ export const rootApi = createApi({
           method: "PUT",
         }),
         invalidatesTags: ["Role"],
+      }),
+      changePassword: builder.mutation({
+        query: (email) => ({
+          url: "/user/forgot",
+          method: "POST",
+          body: email,
+        }),
+      }),
+      ResetPassword: builder.mutation({
+        query: ({ password, token }) => ({
+          url: `/user/reset`,
+          method: "POST",
+          body: { password },
+          params: { token },
+        }),
+      }),
+      addProgress: builder.mutation({
+        query: ({ course, lectureId }) => ({
+          url: `/user/progress`,
+          method: "POST",
+          params: { course, lectureId },
+        }),
+        invalidatesTags: ["Lectures"],
+      }),
+      fetchProgress: builder.query({
+        query: ({ course }) => {
+          return {
+            url: `/user/progress`,
+            params: { course },
+            providesTags: ["Lectures"],
+          };
+        },
       }),
     };
   },
@@ -170,4 +202,8 @@ export const {
   useAddCourseMutation,
   useFetchUsersQuery,
   useUpdateRoleMutation,
+  useChangePasswordMutation,
+  useResetPasswordMutation,
+  useAddProgressMutation,
+  useFetchProgressQuery,
 } = rootApi;

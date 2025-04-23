@@ -1,7 +1,9 @@
 import Loading from "@components/Loading";
 import {
   useAddLectureMutation,
+  useAddProgressMutation,
   useDeleteLectureMutation,
+  useFetchProgressQuery,
   useGetDetailLectureQuery,
   useGetDetailLecturesQuery,
 } from "@services/rootApi";
@@ -9,8 +11,9 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import "./lecture.css";
-import { Button } from "@mui/material";
+import { Button, LinearProgress } from "@mui/material";
 import toast from "react-hot-toast";
+import { DoneAll } from "@mui/icons-material";
 
 const Lecture = () => {
   const [lectures, setLectures] = useState([]);
@@ -19,7 +22,7 @@ const Lecture = () => {
   const [lecLoading, setLecLoading] = useState(true);
   const params = useParams();
   const [id, setId] = useState(null);
-  const dataLectures = useGetDetailLecturesQuery(params.id);
+  const { data: dataLectures } = useGetDetailLecturesQuery(params.id);
   const dataLecture = useGetDetailLectureQuery(id)?.data?.lecture;
   const [show, setShow] = useState(false);
   const user = useSelector((state) => state.auth.userInfo.user);
@@ -29,7 +32,12 @@ const Lecture = () => {
   const [videoPrev, setVideoPrev] = useState("");
   const [btnLoading, setBtnLoading] = useState(false);
   const navigate = useNavigate();
-
+  const [completed, setCompleted] = useState("");
+  const [completedLec, setCompletedLec] = useState("");
+  const [lectLength, setLectLength] = useState("");
+  const [progressLec, setProgressLec] = useState([]);
+  const [progress] = useAddProgressMutation();
+  const { data, refetch } = useFetchProgressQuery({ course: params.id });
   if (user && user.role !== "admin" && !user.subscription.includes(params.id)) {
     navigate("/");
   }
@@ -38,7 +46,7 @@ const Lecture = () => {
   };
 
   useEffect(() => {
-    setLectures(dataLectures?.data?.lectures);
+    setLectures(dataLectures?.lectures);
     setLoading(false);
     setLecture(dataLecture);
     setLecLoading(false);
@@ -68,7 +76,7 @@ const Lecture = () => {
     try {
       // Call addLecture mutation with params.id as part of the body
       await addLecture({ id: params.id, formData: myForm }); // Pass the formData and params.id
-
+      refetch();
       setTitle("");
       setDescription("");
       setVideo("");
@@ -81,15 +89,33 @@ const Lecture = () => {
     }
   };
   const [deleteLectureApi] = useDeleteLectureMutation();
-  const deleteHandler = async (lectureId) => {
+  const deleteHandler = async (id) => {
     if (confirm("Are you sure you want to delete this lecture?")) {
       try {
-        await deleteLectureApi(lectureId);
+        await deleteLectureApi(id);
+        refetch();
       } catch (error) {
         toast.error(error.response.data.message);
       }
     }
   };
+
+  const addProgress = async (id) => {
+    await progress({ course: params.id, lectureId: id });
+    refetch();
+  };
+
+  useEffect(() => {
+    setCompleted(data?.courseProgressPercentage);
+    setCompletedLec(data?.completedLectures);
+    setLectLength(data?.allLectures);
+    setProgressLec(data?.progress);
+  }, [
+    data?.courseProgressPercentage,
+    data?.completedLectures,
+    data?.allLectures,
+    data?.progress,
+  ]);
 
   return (
     <>
@@ -97,6 +123,17 @@ const Lecture = () => {
         <Loading />
       ) : (
         <>
+          <div className="progress">
+            Lecture completed: {completedLec} out of {lectLength}
+            <br />
+            <LinearProgress
+              variant="determinate"
+              value={(completedLec / lectLength) * 100}
+              color="secondary"
+              sx={{ height: "8px" }}
+            />
+            <div className="mt-2">{completed} %</div>
+          </div>
           <div className="lecture-page">
             <div className="left">
               {lecLoading ? (
@@ -113,6 +150,7 @@ const Lecture = () => {
                         controlsList="nodownload noremoteplayback"
                         disablePictureInPicture
                         disableRemotePlayback
+                        onEnded={() => addProgress(lecture._id)}
                       ></video>
                       <h1>{lecture?.title}</h1>
                       <h3>{lecture.description}</h3>
@@ -184,7 +222,13 @@ const Lecture = () => {
                       onClick={() => OnSubmit(e?._id)}
                       key={e?._id}
                     >
-                      {i + 1}. {e?.title}
+                      {i + 1}. {e?.title}{" "}
+                      {progressLec &&
+                        progressLec[0]?.completedLectures.includes(e?._id) && (
+                          <span>
+                            <DoneAll />
+                          </span>
+                        )}
                     </div>
                     {user && user.role === "admin" && (
                       <Button

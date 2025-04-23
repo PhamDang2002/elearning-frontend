@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 const Sidebar = () => {
   const user = useSelector((state) => state.auth.userInfo.user);
-  console.log(user);
+
   return (
     <div className="sidebar">
       <ul className="text-black">
@@ -28,7 +28,7 @@ const Sidebar = () => {
           </Link>
         </li>
 
-        {user && user.role === "admin" && (
+        {user && user.mainrole === "superadmin" && (
           <li>
             <Link to={"/admin/users"}>
               <div className="icon">

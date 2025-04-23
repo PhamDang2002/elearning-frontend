@@ -98,7 +98,15 @@ const LoginPage = () => {
         </Button>
       </form>
       <p className="mt-4">
-        New on our platform? <Link to="/register">Create an account</Link>
+        New on our platform?
+        <Link to="/register" className="ml-1 text-primary-main">
+          Create an account
+        </Link>
+      </p>
+      <p className="mt-2">
+        <Link to="/forgot" className="text-primary-main">
+          Forgot Password?
+        </Link>
       </p>
     </div>
   );

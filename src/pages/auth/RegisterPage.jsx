@@ -86,7 +86,10 @@ const RegisterPage = () => {
         {isError && <Alert severity="error">{error?.data?.message}</Alert>}
       </form>
       <p className="mt-4">
-        Already have an account? <Link to="/login">Sign in instead</Link>
+        Already have an account?{" "}
+        <Link to="/login" className="text-primary-main">
+          Sign in instead
+        </Link>
       </p>
     </div>
   );
