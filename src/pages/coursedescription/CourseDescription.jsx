@@ -23,7 +23,7 @@ const CourseDescription = () => {
   const checkoutHandler = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/create-payment-link`,
+        `${import.meta.env.VITE_BASE_URL}/create-payment-link`,
         {
           method: "POST",
           headers: {

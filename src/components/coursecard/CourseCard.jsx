@@ -37,7 +37,7 @@ const CourseCard = ({ course, courses, setCourses }) => {
   return (
     <div className="course-card">
       <img
-        src={`${import.meta.env.VITE_BASE_URL}/${course.image}`}
+        src={`${import.meta.env.VITE_API_URL}/${course.image}`}
         alt=""
         className="course-image"
       />
