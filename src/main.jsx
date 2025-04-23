@@ -33,7 +33,7 @@ import AdminUsers from "./admin/Users/AdminUsers";
 import ForgotPassword from "@pages/auth/ForgotPassword";
 import ResetPassword from "@pages/auth/ResetPassword";
 
-export const server = "http://localhost:5000";
+export const server = "https://elerning-server-893q.onrender.com/api";
 
 const router = createBrowserRouter([
   {
