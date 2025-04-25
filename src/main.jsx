@@ -33,7 +33,7 @@ import AdminUsers from "./admin/Users/AdminUsers";
 import ForgotPassword from "@pages/auth/ForgotPassword";
 import ResetPassword from "@pages/auth/ResetPassword";
 
-export const server = "https://elerning-server-893q.onrender.com/api";
+export const server = `${import.meta.env.VITE_BASE_URLL}`;
 
 const router = createBrowserRouter([
   {

@@ -1,5 +1,5 @@
 import "./courseCard.css";
-import { server } from "../../main";
+
 import { Button } from "@mui/material";
 import { currencyFormatter } from "@libs/utils";
 import {
