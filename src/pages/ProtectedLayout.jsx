@@ -20,9 +20,9 @@ const ProtectedLayout = () => {
     }
   }, [response.isSuccess, response.data, dispatch]);
 
-  if (response.isLoading) {
-    return <Loading />;
-  }
+  // if (response.isLoading) {
+  //   return <Loading />;
+  // }
 
   /*
   isLoading: no chi set thanh true o lan query dau tien
