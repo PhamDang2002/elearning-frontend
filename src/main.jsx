@@ -131,7 +131,7 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <PersistGate loading={<Loading />} persistor={persistor}>
+    <PersistGate persistor={persistor}>
       <ThemeProvider theme={theme}>
         <ModalProvider>
           <RouterProvider router={router} />
