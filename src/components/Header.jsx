@@ -54,18 +54,6 @@ const Header = ({ response }) => {
             <Link to="/">
               <img src="/weconnect-logo.png" className="h-9 w-9" />
             </Link>
-            <div className="flex items-center gap-1">
-              {/* <Search />
-              <TextField
-                variant="standard"
-                name="search"
-                placeholder="Search"
-                slotProps={{
-                  input: { className: "h-10 px-3 py-2" },
-                  htmlInput: { className: "!p-0" },
-                }}
-              /> */}
-            </div>
           </div>
           <div className="flex">
             <div className="flex items-center gap-2">
@@ -79,11 +67,6 @@ const Header = ({ response }) => {
 
             {response?.data?.user?._id ? (
               <div>
-                <IconButton size="medium">
-                  <Badge badgeContent={4} color="error">
-                    <Notifications />
-                  </Badge>
-                </IconButton>
                 <IconButton size="medium" onClick={handleUserProfileClick}>
                   <Avatar className="!bg-primary-main">
                     {userInfo?.name?.[0]?.toUpperCase()}
