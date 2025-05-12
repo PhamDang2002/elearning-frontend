@@ -49,12 +49,11 @@ const Header = ({ response }) => {
   return (
     <div>
       <AppBar color="white" position="static" className="py-4">
-        <Toolbar className="!min-h-fit justify-between">
+        <Toolbar className="container mx-auto !min-h-fit justify-between">
           <div className="flex items-center gap-4">
             <Link to="/">
               <img src="/weconnect-logo.png" className="h-9 w-9" />
             </Link>
-
             <div className="flex items-center gap-1">
               {/* <Search />
               <TextField

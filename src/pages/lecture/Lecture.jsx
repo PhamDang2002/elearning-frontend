@@ -13,7 +13,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import "./lecture.css";
 import { Button, LinearProgress } from "@mui/material";
 import toast from "react-hot-toast";
-import { DoneAll } from "@mui/icons-material";
+import { Done, DoneAll } from "@mui/icons-material";
+import DetailLecture from "@components/DetailLecture";
 
 const Lecture = () => {
   const [lectures, setLectures] = useState([]);
@@ -24,6 +25,7 @@ const Lecture = () => {
   const [id, setId] = useState(null);
   const { data: dataLectures } = useGetDetailLecturesQuery(params.id);
   const dataLecture = useGetDetailLectureQuery(id)?.data?.lecture;
+
   const [show, setShow] = useState(false);
   const user = useSelector((state) => state.auth.userInfo.user);
   const [title, setTitle] = useState("");
@@ -104,7 +106,7 @@ const Lecture = () => {
     await progress({ course: params.id, lectureId: id });
     refetch();
   };
-
+  const courseCount = dataLectures?.lectures?.length;
   useEffect(() => {
     setCompleted(data?.courseProgressPercentage);
     setCompletedLec(data?.completedLectures);
@@ -124,7 +126,7 @@ const Lecture = () => {
       ) : (
         <>
           <div className="progress">
-            Lecture completed: {completedLec} out of {lectLength}
+            Lecture completed: {completedLec || 0} out of {courseCount || 0}
             <br />
             <LinearProgress
               variant="determinate"
@@ -132,123 +134,28 @@ const Lecture = () => {
               color="secondary"
               sx={{ height: "8px" }}
             />
-            <div className="mt-2">{completed} %</div>
+            <div className="mt-2">{Math.round(completed) || 0} %</div>
           </div>
-          <div className="lecture-page">
-            <div className="left">
-              {lecLoading ? (
-                <Loading />
-              ) : (
-                <>
-                  {lecture?.video ? (
-                    <>
-                      <video
-                        src={`${import.meta.env.VITE_API_URL}/${lecture?.video}`}
-                        width={"100%"}
-                        controls
-                        autoPlay
-                        controlsList="nodownload noremoteplayback"
-                        disablePictureInPicture
-                        disableRemotePlayback
-                        onEnded={() => addProgress(lecture._id)}
-                      ></video>
-                      <h1>{lecture?.title}</h1>
-                      <h3>{lecture.description}</h3>
-                    </>
-                  ) : (
-                    <h1>Please Select a Lecture</h1>
-                  )}
-                </>
-              )}
-            </div>
-            <div className="right">
-              {user && user.role === "admin" && (
-                <Button
-                  variant="contained"
-                  className="common-btn !mt-2"
-                  onClick={() => setShow(!show)}
-                >
-                  {show ? "Close" : "Add Lecture"}
-                </Button>
-              )}
-              {show && (
-                <div className="lecture-form">
-                  <h2>Add Lecture</h2>
-                  <form onSubmit={submitHandler}>
-                    <label htmlFor="textt">Title</label>
-                    <input
-                      type="text"
-                      value={title}
-                      required
-                      onChange={(e) => setTitle(e.target.value)}
-                    />
-
-                    <label htmlFor="text">Description</label>
-                    <input
-                      type="text"
-                      required
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                    />
-
-                    <input
-                      type="file"
-                      placeholder="choose video"
-                      onChange={changeVideoHandler}
-                      required
-                    />
-
-                    {videoPrev && (
-                      <video src={videoPrev} controls width={300} />
-                    )}
-
-                    <Button
-                      disabled={btnLoading}
-                      variant="contained"
-                      type="submit"
-                      className="common-btn"
-                    >
-                      {btnLoading ? "Uploading..." : "Upload"}
-                    </Button>
-                  </form>
-                </div>
-              )}
-
-              {lectures && lectures.length > 0 ? (
-                lectures.map((e, i) => (
-                  <>
-                    <div
-                      className={`lecture-number ${lecture?._id === e?._id && "active"}`}
-                      onClick={() => OnSubmit(e?._id)}
-                      key={e?._id}
-                    >
-                      {i + 1}. {e?.title}{" "}
-                      {progressLec &&
-                        progressLec[0]?.completedLectures.includes(e?._id) && (
-                          <span>
-                            <DoneAll />
-                          </span>
-                        )}
-                    </div>
-                    {user && user.role === "admin" && (
-                      <Button
-                        variant="contained"
-                        className="common-btn !mt-4 !font-bold !text-white"
-                        style={{
-                          backgroundColor: "red",
-                        }}
-                        onClick={() => deleteHandler(e?._id)}
-                      >
-                        Delete {e?.title}
-                      </Button>
-                    )}
-                  </>
-                ))
-              ) : (
-                <p>No Lectures Yet!</p>
-              )}
-            </div>
-          </div>
+          <DetailLecture
+            lecture={lecture}
+            lecLoading={lecLoading}
+            progressLec={progressLec}
+            addProgress={addProgress}
+            user={user}
+            submitHandler={submitHandler}
+            title={title}
+            Button={Button}
+            DoneAll={DoneAll}
+            Done={Done}
+            lectures={lectures}
+            show={show}
+            videoPrev={videoPrev}
+            btnLoading={btnLoading}
+            OnSubmit={OnSubmit}
+            changeVideoHandler={changeVideoHandler}
+            deleteHandler={deleteHandler}
+            setShow={setShow}
+          />
         </>
       )}
     </>

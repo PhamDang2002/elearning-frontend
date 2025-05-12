@@ -5,7 +5,7 @@ import { useGetDetailCourseQuery } from "@services/rootApi";
 
 const CourseStudy = () => {
   const params = useParams();
-  console.log(params);
+
   const user = useSelector((state) => state.auth.userInfo.user);
   const navigate = useNavigate();
   const course = useGetDetailCourseQuery(params.id)?.data?.course;

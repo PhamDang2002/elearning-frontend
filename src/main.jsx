@@ -136,7 +136,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <PersistGate loading={<Loading />} persistor={persistor}>
       <ThemeProvider theme={theme}>
         <ModalProvider>
-          <RouterProvider router={router} />
+          <RouterProvider
+            router={router}
+            future={{
+              v7_startTransition: true,
+              v7_relativeSplatPath: true,
+            }}
+          />
         </ModalProvider>
       </ThemeProvider>
     </PersistGate>
