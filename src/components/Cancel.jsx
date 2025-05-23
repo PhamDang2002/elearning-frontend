@@ -5,7 +5,7 @@ const Cancel = () => {
   const navigate = useNavigate();
   return (
     <div>
-      Đã hủy thanh toán
+      Đã hủy thanh toán 231
       <Button onClick={() => navigate("/")}>Quay trở về trang chủ</Button>
     </div>
   );
