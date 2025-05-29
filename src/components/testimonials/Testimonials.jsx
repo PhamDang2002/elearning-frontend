@@ -43,7 +43,7 @@ const Testimonials = () => {
           data-testid="testimonials-video"
         >
           <source src="/shortvideo.mp4" type="video/mp4" />
-          Trình duyệt của bạn không hỗ trợ video.
+          Trình duyệt của bạn không hỗ trợ video này.
         </video>
         <h2 className="text-[32px] font-bold text-[#8a4baf]">
           Featured courses?
