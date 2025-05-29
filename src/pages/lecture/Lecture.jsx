@@ -125,7 +125,7 @@ const Lecture = () => {
         <Loading />
       ) : (
         <>
-          <div className="progress">
+          <div className="progress !mt-28">
             Lecture completed: {completedLec || 0} out of {courseCount || 0}
             <br />
             <LinearProgress
