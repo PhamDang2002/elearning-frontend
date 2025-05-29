@@ -33,7 +33,7 @@ const Success = () => {
   // Check if the code is '00' and if there's an 'id'
 
   return (
-    <div>
+    <div className="!mt-28">
       Success
       <Button onClick={handleNavigateAndRefresh}>Quay trở lại khóa học</Button>
     </div>
