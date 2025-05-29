@@ -1,10 +1,9 @@
 import { useLogout } from "@hooks/useLogout";
 import { useUserInfo } from "@hooks/useUserInfo";
-import { Notifications } from "@mui/icons-material";
+
 import {
   AppBar,
   Avatar,
-  Badge,
   IconButton,
   Menu,
   MenuItem,
@@ -48,7 +47,7 @@ const Header = ({ response }) => {
 
   return (
     <div>
-      <AppBar color="white" position="static" className="py-4">
+      <AppBar color="white" position="fixed" className="!bg-white py-2">
         <Toolbar className="container mx-auto !min-h-fit justify-between">
           <div className="flex items-center gap-4">
             <Link to="/">

@@ -16,7 +16,7 @@ const CourseStudy = () => {
   return (
     <>
       {course && (
-        <div className="course-study-page">
+        <div className="course-study-page mt-20 !h-[100vh]">
           <img
             src={`${import.meta.env.VITE_API_URL}/${course.image}`}
             alt=""
