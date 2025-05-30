@@ -1,3 +1,4 @@
+import ChatAi from "@components/ChatAi";
 import Header from "@components/Header";
 import Loading from "@components/Loading";
 import { saveUserInfo } from "@redux/slices/authSlice";
@@ -37,6 +38,7 @@ const ProtectedLayout = () => {
     <div>
       <Header response={response} />
       <Outlet response={response} />
+      <ChatAi />
     </div>
   );
 };

@@ -87,7 +87,7 @@ const RegisterPage = () => {
       </form>
       <p className="mt-4">
         Already have an account?{" "}
-        <Link to="/login" className="text-primary-main">
+        <Link to="/login" className="text-primary-main-main">
           Sign in instead
         </Link>
       </p>

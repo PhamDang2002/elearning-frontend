@@ -99,12 +99,12 @@ const LoginPage = () => {
       </form>
       <p className="mt-4">
         New on our platform?
-        <Link to="/register" className="ml-1 text-primary-main">
+        <Link to="/register" className="text-primary-main-main ml-1">
           Create an account
         </Link>
       </p>
       <p className="mt-2">
-        <Link to="/forgot" className="text-primary-main">
+        <Link to="/forgot" className="text-primary-main-main">
           Forgot Password?
         </Link>
       </p>
